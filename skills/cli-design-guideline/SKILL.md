@@ -19,6 +19,41 @@ The full guideline (~900 lines) is bundled at `references/cli-guideline.md`. Tre
    - **Multi-section design** — designing a tool or subcommand from scratch, where you need to cover flags, help, output, and more. Read sections in this order — **The Basics → Arguments and flags → Help → Output** — then add other sections as needed. This is a *reading* order to build understanding progressively; structure your *response* however best serves the user.
 4. **Don't lecture.** Weave the principles into your design suggestions. If the user asks "should I add `--verbose` or `-v`?" don't recite the whole philosophy — just answer, with a one-line rationale.
 5. **Push back gently when a proposal violates a principle.** Explain the tradeoff (e.g., "A positional arg here breaks the consistency rule — users expect `-f FILE`. Worth it?") and let the user decide. This is compatible with "don't lecture" — one sentence of rationale is a push-back, not a lecture.
+6. **When details are missing, keep moving with explicit assumptions.** State one or two assumptions only when they affect the CLI shape, then produce a concrete design. Put unresolved domain choices in a short "Open questions" section instead of stopping.
+
+## Response patterns
+
+Use the smallest pattern that fits the user's request. These are output shapes, not mandatory headings.
+
+### Designing a new CLI or subcommand
+
+Include:
+
+- **Command shape**: synopsis, subcommand hierarchy if needed, and why key values are positional args vs flags.
+- **Flags table or list**: long flags for all options; short flags only for common actions and only when they do not conflict (`-q` should not mean both `--quiet` and `--quality`).
+- **Help example**: README-ready `--help`/usage text when the user asks for a spec, README snippet, or help design.
+- **Output contract**: what goes to stdout, stderr, and `--json`; how `--quiet`, `--verbose`, progress, color, and TTY detection behave.
+- **Automation contract**: non-interactive behavior, `--no-input`, `NO_COLOR`, config/env precedence, and exit code classes when relevant.
+- **Open questions**: domain details that would change behavior, such as overwrite rules, file schemas, tenant names, or exact failure taxonomy.
+
+### Reviewing an existing CLI
+
+Lead with findings, ordered by user impact. Prefer concise review labels such as `[P0]`, `[P1]`, `[P2]` when there are multiple issues. Tie every finding to the specific command behavior, then give the fix. Cover destructive actions, stdout/stderr, TTY/color/CI, help discoverability, exit codes, and debug output when present.
+
+### Porting a GUI or API workflow to the terminal
+
+Design both the human path and the automation path:
+
+- Human path: safe defaults, confirmations, readable summaries, examples.
+- Automation path: explicit flags, stable machine output, `--no-input`, credentials via env/config rather than command-line secrets.
+- Auditability: print IDs for state-changing operations and include them in JSON output.
+
+### Default decisions for common ambiguities
+
+- Use `--yes`/`-y` to confirm a prompt non-interactively; reserve `--force` for bypassing additional safety checks or overwriting existing state.
+- Keep stdout for primary results. Put logs, progress, warnings, and human-readable errors on stderr. With `--json`, stdout should contain only the requested machine-readable result.
+- Error code values are domain-specific. Offer a small illustrative mapping only when it helps the user implement or script the CLI.
+- If an option has no obvious short flag, omit the short flag. A long-only flag is better than a memorable conflict.
 
 ## Philosophy (the 8 pillars)
 
@@ -88,4 +123,3 @@ The guideline's authors are explicit that these are conventions, not laws. If th
 - Full-screen TUI apps (ncurses, Textual, Bubble Tea) — the guideline explicitly scopes these out. Use general TUI/UX knowledge there.
 - Language-specific idioms inside the implementation (error handling in Go, async in Python, etc.) — apply normal language best practices alongside this skill.
 - Shell scripting style per se (shellcheck, quoting rules). Those are adjacent but separate.
-
