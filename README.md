@@ -21,13 +21,12 @@ Best practices for writing and reviewing SolidJS code.
 
 ### [working-backwards](./skills/working-backwards/)
 
-Amazon流 Working Backwards（PR/FAQ）プロセス。プロダクト・機能のアイデアを、実装前に架空のプレスリリースとFAQで顧客起点から検証する。
+Amazon流 Working Backwards（PR/FAQ）を起点に、アイデア→PRFAQ→仕様書→実装計画までをインタビュー形式で進める開発パイプライン。各フェーズはユーザーの承認ゲートで区切る。
 
 **Covers:**
-- 顧客の5つの質問（事実/仮説のラベリング）
-- 1ページのプレスリリース構成と規範
-- 外部/内部FAQ（最も答えにくい質問から書く）
-- 進める / 検証してから / やらない の三択判定
+- Phase 1 PRFAQ: 顧客の5つの質問、1ページPR、外部/内部FAQ、進める/検証/やらない の三択判定
+- Phase 2 仕様書: スコープ、ユーザーストーリーと受入条件、必要に応じた周辺ドキュメント（OpenAPI、ADR ほか）
+- Phase 3 実装計画: トレーサーバレット起点のチケット分解とブロック関係
 
 ## Installation
 
