@@ -19,6 +19,16 @@ Best practices for writing and reviewing SolidJS code.
 - Code review checklist
 - SolidStart: routing, server functions, actions, API routes
 
+### [working-backwards](./skills/working-backwards/)
+
+Amazon流 Working Backwards（PR/FAQ）プロセス。プロダクト・機能のアイデアを、実装前に架空のプレスリリースとFAQで顧客起点から検証する。
+
+**Covers:**
+- 顧客の5つの質問（事実/仮説のラベリング）
+- 1ページのプレスリリース構成と規範
+- 外部/内部FAQ（最も答えにくい質問から書く）
+- 進める / 検証してから / やらない の三択判定
+
 ## Installation
 
 ```sh
